@@ -1,0 +1,30 @@
+name: G24AI2047_MLAssignment_CI
+
+on:
+  push:
+    branches:
+      - kernelridge
+
+jobs:
+  run-models:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run DecisionTree
+        run: python train.py
+
+      - name: Run KernelRidge
+        run: python train2.py
